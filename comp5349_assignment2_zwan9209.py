@@ -324,4 +324,4 @@ print(result_df.take(1))
 
 from pandas import DataFrame
 
-result_df.coalesce(1).write.json('s3://comp5349-2022/test_result.json')
+result_df.coalesce(1).write.json('comp5349-2022/test_result.json')
