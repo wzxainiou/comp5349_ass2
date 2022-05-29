@@ -325,6 +325,4 @@ result_df.printSchema()
 
 print(result_df.take(1))
 
-from pandas import DataFrame
-
 result_df.coalesce(1).write.json()
