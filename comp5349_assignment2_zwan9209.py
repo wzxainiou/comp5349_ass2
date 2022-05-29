@@ -59,7 +59,7 @@ test_data_df.printSchema()
 
 test_data_df.count()
 
-test_paragraph_df = test_data_df.select(explode("data.paragraphs").alias("paragraph"))
+test_paragraph_df = test_data_df.select(explode("data.paragraphs").alias("paragraph")).cache()
 
 test_paragraph_df.printSchema()
 
@@ -68,7 +68,7 @@ test_paragraph_df.count()
 test_paragraph_df.take(1)
 
 # divide the questions from the whole paragraph of each context.
-test_questions_df = test_paragraph_df.select(explode("paragraph.qas").alias("questions"))
+test_questions_df = test_paragraph_df.select(explode("paragraph.qas").alias("questions")).cache()
 
 # the count is 41 multiple number of the paragraph, because there are 41 questions for each context.
 test_questions_df.count()
@@ -98,19 +98,19 @@ test_questions_counter_df = test_questions_df.filter("questions.is_impossible ==
 test_questions_counter_df.printSchema()
 
 # count the number of possible samples of each question
-test_possible_counter_rdd = test_questions_counter_df.rdd.map(list)
-test_possible_counter_rdd = test_possible_counter_rdd.map(possible_counter)
-test_possible_counter_rdd = test_possible_counter_rdd.reduceByKey(lambda a,b: a+b)
+test_possible_counter_rdd = test_questions_counter_df.rdd.map(list).map(possible_counter).reduceByKey(lambda a,b: a+b)
+# test_possible_counter_rdd = test_possible_counter_rdd.map(possible_counter)
+# test_possible_counter_rdd = test_possible_counter_rdd.reduceByKey(lambda a,b: a+b)
 
 # count the number of answers of each question
 test_answer_counter_df = test_questions_counter_df.select("question",explode("answer_start"))
-test_answer_counter_rdd = test_answer_counter_df.rdd.map(list)
-test_answer_counter_rdd = test_answer_counter_rdd.map(possible_counter)
-test_answer_counter_rdd = test_answer_counter_rdd.reduceByKey(lambda a,b: a+b)
+test_answer_counter_rdd = test_answer_counter_df.rdd.map(list).map(possible_counter).reduceByKey(lambda a,b: a+b)
+# test_answer_counter_rdd = test_answer_counter_rdd.map(possible_counter)
+# test_answer_counter_rdd = test_answer_counter_rdd.reduceByKey(lambda a,b: a+b)
 
 # calculate the ave possible samples of each question
-test_ave_possible_rdd = test_answer_counter_rdd.join(test_possible_counter_rdd)
-test_ave_possible_rdd = test_ave_possible_rdd.map(count_ave)
+test_ave_possible_rdd = test_answer_counter_rdd.join(test_possible_counter_rdd).map(count_ave)
+# test_ave_possible_rdd = test_ave_possible_rdd.map(count_ave)
 
 # transform the results into dict 
 test_ave_possible_dict = test_ave_possible_rdd.collectAsMap()
@@ -139,7 +139,7 @@ def define_context_answer(answer):
   return result
 
 
-test_context_answer_df = test_paragraph_df.select(explode("paragraph.qas").alias("questions"),"paragraph.context")
+test_context_answer_df = test_paragraph_df.select(explode("paragraph.qas").alias("questions"),"paragraph.context").cache()
 test_context_answer_df.printSchema()
 print(test_context_answer_df.count())
 
