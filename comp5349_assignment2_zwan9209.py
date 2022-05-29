@@ -140,6 +140,7 @@ def define_context_answer(answer):
 
 
 test_context_answer_step_df = test_paragraph_df.select(explode("paragraph.qas").alias("questions"),"paragraph.context").cache()
+test_context_answer_step_df = test_context_answer_step_df.withColumnRenamed("paragraph.context","context")
 test_context_answer_step_df.printSchema()
 print(test_context_answer_step_df.count())
 
