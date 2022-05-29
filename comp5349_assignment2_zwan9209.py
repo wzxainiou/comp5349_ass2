@@ -10,12 +10,12 @@ Original file is located at
 This notebook demonstrates a few useful methods for loading json file and for handling nested json objects. The example file is `test.json` in assignment 2.
 """
 
-!pip install pyspark
+# !pip install pyspark
 
-!pip install pandas
+# !pip install pandas
 
-from google.colab import drive
-drive.mount('/content/drive')
+# from google.colab import drive
+# drive.mount('/content/drive')
 
 from pyspark.sql import Column
 from pyspark.sql.functions import upper
