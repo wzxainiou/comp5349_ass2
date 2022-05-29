@@ -29,7 +29,7 @@ spark = SparkSession \
 
 """### Load Json file as data frame"""
 
-test_data = "s3://comp5349-2022/test.json"
+test_data = "s3://comp5349-2022/train_separate_questions.json"
 test_init_df = spark.read.json(test_data)
 
 # The original file will be loaded into a data frame with one row and two columns
@@ -115,7 +115,7 @@ test_ave_possible_rdd = test_ave_possible_rdd.map(count_ave)
 # transform the results into dict 
 test_ave_possible_dict = test_ave_possible_rdd.collectAsMap()
 
-test_ave_possible_dict
+print(test_ave_possible_dict)
 
 # define the functions
 
@@ -152,7 +152,7 @@ test_context_answer_rdd= test_context_answer_df.rdd.map(list)
 
 # # transform the data structure in to [context, [s,e], questions, is_impossible]
 test_context_answer_rdd = test_context_answer_rdd.flatMap(define_context_answer)
-test_context_answer_rdd.take(5)
+print(test_context_answer_rdd.take(5))
 
 # split the context into segments
 def split_context_segment(input):
@@ -178,7 +178,7 @@ def split_context_segment(input):
 
 # divide all the context into segments which length is 4096 and mark the s,e of each segment
 test_segment_answer_rdd = test_context_answer_rdd.map(split_context_segment)
-test_segment_answer_rdd.take(2)
+print(test_segment_answer_rdd.take(2))
 
 import random
 
@@ -320,7 +320,7 @@ result_df = spark.createDataFrame(test_sample_rdd,schema=result_schema).cache()
 
 result_df.printSchema()
 
-result_df.take(1)
+print(result_df.take(1))
 
 from pandas import DataFrame
 
