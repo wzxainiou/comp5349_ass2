@@ -29,7 +29,7 @@ spark = SparkSession \
 
 """### Load Json file as data frame"""
 
-test_data = "s3://comp5349-2022/train_separate_questions.json"
+test_data = "s3://comp5349-2022/test.json"
 test_init_df = spark.read.json(test_data)
 
 # The original file will be loaded into a data frame with one row and two columns
