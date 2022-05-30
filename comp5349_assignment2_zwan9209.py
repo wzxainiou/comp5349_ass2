@@ -44,7 +44,6 @@ test_init_df.show(1)
 
 test_init_df.printSchema()
 
-test_init_df.count()
 
 """### `select` and `explode`
 
