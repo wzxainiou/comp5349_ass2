@@ -314,4 +314,4 @@ result_df.printSchema()
 
 print(result_df.take(5))
 
-result_df.coalesce(1).write.json('/hadoop/data')
+result_df.coalesce(1).write.json('/data')
