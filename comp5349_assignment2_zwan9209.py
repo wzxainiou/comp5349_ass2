@@ -59,26 +59,16 @@ test_data_df= test_init_df.select((explode("data").alias('data')))
 
 test_data_df.printSchema()
 
-test_data_df.count()
-
 test_paragraph_df = test_data_df.select(explode("data.paragraphs").alias("paragraph")).cache()
 
 test_paragraph_df.printSchema()
-
-test_paragraph_df.count()
-
-test_paragraph_df.take(1)
 
 # divide the questions from the whole paragraph of each context.
 test_questions_df = test_paragraph_df.select(explode("paragraph.qas").alias("questions")).cache()
 
 # the count is 41 multiple number of the paragraph, because there are 41 questions for each context.
-test_questions_df.count()
 
 test_questions_df.printSchema()
-
-# change the Structures of the paragraphs
-test_paragraph_df.printSchema()
 
 # define the ave number of positive samples of each question
 
