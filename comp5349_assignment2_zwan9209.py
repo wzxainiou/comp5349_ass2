@@ -133,13 +133,11 @@ def define_context_answer(answer):
 test_context_answer_step_df = test_paragraph_df.select(explode("paragraph.qas").alias("questions"),"paragraph.context").cache()
 test_context_answer_step_df = test_context_answer_step_df.withColumnRenamed("paragraph.context","context")
 test_context_answer_step_df.printSchema()
-print(test_context_answer_step_df.count())
 
 test_context_answer_df = test_context_answer_step_df.select("questions.answers.answer_start","questions.answers.text","questions.is_impossible","questions.question","context")
 # test_context_answer_df = test_context_answer_df.select("context","questions.answers.answer_start","questions.answers.text","questions.is_impossible","questions.question")
 # test_context_answer_df = test_context_answer_df.select("answer_start","text","text","question","context")
 test_context_answer_df.printSchema()
-print(test_context_answer_df.count())
 
 # transform the df into rdd
 test_context_answer_rdd= test_context_answer_df.rdd.map(list)
