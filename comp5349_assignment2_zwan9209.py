@@ -22,7 +22,7 @@ from pyspark.sql.functions import upper
 from pyspark.sql.functions import split
 
 from pyspark.sql import SparkSession
-spark.eventLog.logBlockUpdates.enabled=True
+# spark.eventLog.logBlockUpdates.enabled=True
 spark = SparkSession \
     .builder \
     .appName("COMP5349 A2 Data Loading Example") \
