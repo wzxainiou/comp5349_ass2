@@ -22,12 +22,13 @@ from pyspark.sql.functions import upper
 from pyspark.sql.functions import split
 
 from pyspark.sql import SparkSession
+spark.eventLog.logBlockUpdates.enabled=True
 spark = SparkSession \
     .builder \
     .appName("COMP5349 A2 Data Loading Example") \
     .getOrCreate()
 
-spark.eventLog.logBlockUpdates.enabled=True
+
 """### Load Json file as data frame"""
 
 test_data = "s3://comp5349-2022/test.json"
